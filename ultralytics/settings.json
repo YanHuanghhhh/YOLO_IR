@@ -1,0 +1,21 @@
+{
+  "settings_version": "0.0.6",
+  "datasets_dir": "E:\\Work\\CV\\Example\\56_YOLO\\YOLO_IR\\datasets",
+  "weights_dir": "weights",
+  "runs_dir": "runs",
+  "uuid": "868037747d1c161f266c9e7b4f4bbcc9961af4fa710707d76e8c81a9e51c79bc",
+  "sync": true,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "hub": true,
+  "mlflow": true,
+  "neptune": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": true
+}

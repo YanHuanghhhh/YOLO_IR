@@ -8,11 +8,11 @@
 
 cd "$(dirname "$0")"
 python train_seg.py \
-    --data E:/Work/Dataset/infrared_sequence/YOLO_VER/NUDT_YOLO/dataset.yaml \
-    --model ../weights/yolo26s-seg.pt \
-    --name yolo26n_seg_nudt \
-    --epochs 100 \
-    --imgsz 640 \
-    --batch 32 \
-    --device 0 \
-    "$@"
+  --data E:/Work/Dataset/infrared_sequence/YOLO_VER/NUDT_YOLO/dataset.yaml \
+  --model ../weights/yolo26s-seg.pt \
+  --name yolo26n_seg_nudt \
+  --epochs 100 \
+  --imgsz 640 \
+  --batch 32 \
+  --device 0 \
+  "$@"

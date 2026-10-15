@@ -14,21 +14,26 @@ from ultralytics import YOLO
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train YOLO detection on infrared datasets")
-    parser.add_argument("--data", type=str,
-                        default="E:/Work/Dataset/infrared_sequence/YOLO_VER/IRDST_YOLO/dataset.yaml",
-                        help="Path to dataset YAML")
-    parser.add_argument("--model", type=str, default="../weights/yolo26n.pt",
-                        help="Path to model weights")
+    parser.add_argument(
+        "--data",
+        type=str,
+        default="E:/Work/Dataset/infrared_sequence/YOLO_VER/IRDST_YOLO/dataset.yaml",
+        help="Path to dataset YAML",
+    )
+    parser.add_argument("--model", type=str, default="../weights/yolo26n.pt", help="Path to model weights")
     parser.add_argument("--epochs", type=int, default=100, help="Number of training epochs")
     parser.add_argument("--imgsz", type=int, default=640, help="Input image size")
     parser.add_argument("--batch", type=int, default=16, help="Batch size per GPU")
     parser.add_argument("--device", type=str, default="0", help="GPU device(s), e.g. '0' or '0,1'")
     parser.add_argument("--name", type=str, default=None, help="Output run name (auto-generated if not set)")
     parser.add_argument("--project", type=str, default="runs/detect", help="Output project directory")
-    parser.add_argument("--resume", action="store_true",
-                        help="断点续训：--model 需指向某个 run 的 weights/last.pt，"
-                             "其余超参以该 checkpoint 内保存的为准（epochs/lr/增强等），"
-                             "仅 device/batch/imgsz/workers 允许用命令行覆盖")
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="断点续训：--model 需指向某个 run 的 weights/last.pt，"
+        "其余超参以该 checkpoint 内保存的为准（epochs/lr/增强等），"
+        "仅 device/batch/imgsz/workers 允许用命令行覆盖",
+    )
     return parser.parse_args()
 
 
@@ -43,8 +48,7 @@ def main():
     if args.resume:
         print(f"[INFO] 断点续训: {args.model} （epochs 等超参取自 checkpoint）")
         model = YOLO(args.model)
-        model.train(resume=True, device=args.device, batch=args.batch,
-                    imgsz=args.imgsz, workers=4)
+        model.train(resume=True, device=args.device, batch=args.batch, imgsz=args.imgsz, workers=4)
         return
 
     model = YOLO(args.model)

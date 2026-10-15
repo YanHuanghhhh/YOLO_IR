@@ -9,12 +9,12 @@
 
 cd "$(dirname "$0")/.."
 PYTHONPATH=. python eval/eval_seg.py \
-    --model ../runs/segment/runs/seg/yolo26n_seg_nudt/weights/best.pt \
-    --dataset-dir E:/Work/Dataset/infrared_sequence/NUDT-MIRSDT-NEW-v2 \
-    --split "test" \
-    --save-path ../runs/segment/runs/seg/yolo26n_seg_nudt/eval \
-    --imgsz 640 \
-    --conf 0.001 \
-    --thre 0.5 \
-    --device 0 \
-    "$@"
+  --model ../runs/segment/runs/seg/yolo26n_seg_nudt/weights/best.pt \
+  --dataset-dir E:/Work/Dataset/infrared_sequence/NUDT-MIRSDT-NEW-v2 \
+  --split "test" \
+  --save-path ../runs/segment/runs/seg/yolo26n_seg_nudt/eval \
+  --imgsz 640 \
+  --conf 0.001 \
+  --thre 0.5 \
+  --device 0 \
+  "$@"

@@ -19,8 +19,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import os
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -34,6 +32,7 @@ from ultralytics import YOLO
 
 try:
     from scipy.io import savemat as _savemat
+
     _HAS_SCIPY = True
 except ImportError:
     _HAS_SCIPY = False
@@ -205,35 +204,46 @@ def _save_json(path: Path, data: Any) -> None:
 def parse_args():
     parser = argparse.ArgumentParser(description="Segmentation evaluation (NUDT-MIRSDT-v2, etc.)")
     # Model
-    parser.add_argument("--model", type=str,
-                        default="E:/Work/CV/Example/56_YOLO/runs/seg/yolo26n-sem_nudt/weights/best.pt",
-                        help="Path to trained YOLO segmentation weights")
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="E:/Work/CV/Example/56_YOLO/runs/seg/yolo26n-sem_nudt/weights/best.pt",
+        help="Path to trained YOLO segmentation weights",
+    )
     # Dataset
-    parser.add_argument("--dataset-dir", type=str,
-                        default="E:/Work/Dataset/infrared_sequence/NUDT-MIRSDT-NEW-v2",
-                        help="Root directory of dataset (contains images/, masks/, video_idx/)")
-    parser.add_argument("--img-dir", type=str, default="images",
-                        help="Subdirectory for images (default: images)")
-    parser.add_argument("--mask-dir", type=str, default="masks",
-                        help="Subdirectory for GT masks (NUDT: masks, MIST: mask)")
-    parser.add_argument("--split", type=str, default="test",
-                        help="Dataset split name (matches video_idx/<split>.txt or root <split>.txt)")
-    parser.add_argument("--split-file", type=str, default=None,
-                        help="Explicit path to split file (overrides --split)")
+    parser.add_argument(
+        "--dataset-dir",
+        type=str,
+        default="E:/Work/Dataset/infrared_sequence/NUDT-MIRSDT-NEW-v2",
+        help="Root directory of dataset (contains images/, masks/, video_idx/)",
+    )
+    parser.add_argument("--img-dir", type=str, default="images", help="Subdirectory for images (default: images)")
+    parser.add_argument(
+        "--mask-dir", type=str, default="masks", help="Subdirectory for GT masks (NUDT: masks, MIST: mask)"
+    )
+    parser.add_argument(
+        "--split",
+        type=str,
+        default="test",
+        help="Dataset split name (matches video_idx/<split>.txt or root <split>.txt)",
+    )
+    parser.add_argument("--split-file", type=str, default=None, help="Explicit path to split file (overrides --split)")
     # Output
-    parser.add_argument("--save-path", type=str, default="runs/seg/eval",
-                        help="Directory for all output files")
+    parser.add_argument("--save-path", type=str, default="runs/seg/eval", help="Directory for all output files")
     # Mode
-    parser.add_argument("--mode", type=str, default="all", choices=["all", "vis", "eval"],
-                        help="all=inference+vis+mat+eval, vis=inference+vis+mat, eval=eval only")
+    parser.add_argument(
+        "--mode",
+        type=str,
+        default="all",
+        choices=["all", "vis", "eval"],
+        help="all=inference+vis+mat+eval, vis=inference+vis+mat, eval=eval only",
+    )
     # Inference params
     parser.add_argument("--imgsz", type=int, default=640, help="Input image size")
-    parser.add_argument("--conf", type=float, default=0.001,
-                        help="Confidence threshold for mask prediction")
+    parser.add_argument("--conf", type=float, default=0.001, help="Confidence threshold for mask prediction")
     parser.add_argument("--device", type=str, default="0", help="GPU device")
     # Threshold
-    parser.add_argument("--thre", type=float, default=0.5,
-                        help="Binarization threshold for evaluation")
+    parser.add_argument("--thre", type=float, default=0.5, help="Binarization threshold for evaluation")
     # Visualization / .mat toggles
     parser.add_argument("--no-vis", action="store_true", help="Skip saving visualization masks")
     return parser.parse_args()
@@ -382,7 +392,7 @@ def main():
         pd_val, fa_val = eval_pd_fa.get()
         miou_tp, prec, recall, fscore = eval_tpfn.get()
 
-        print(f"\n{'='*50}")
+        print(f"\n{'=' * 50}")
         print(f"  pixAcc:        {pix_acc:.6f}")
         print(f"  mIoU:          {miou_val:.6f}")
         print(f"  mIoU (TPFNFP): {miou_tp:.6f}")
@@ -392,7 +402,7 @@ def main():
         print(f"  Precision:     {prec:.6f}")
         print(f"  Recall:        {recall:.6f}")
         print(f"  F1:            {fscore:.6f}")
-        print(f"{'='*50}")
+        print(f"{'=' * 50}")
 
         # --- Save metrics.json ---
         metrics = {
@@ -472,8 +482,8 @@ def main():
 def _extract_pred_map(results) -> np.ndarray | None:
     """Extract a single raw prediction map from YOLO segmentation results.
 
-    Handles both semantic segmentation (semantic_mask, shape H×W) and instance
-    segmentation (masks, shape N×H×W merged via max).
+    Handles both semantic segmentation (semantic_mask, shape H×W) and instance segmentation (masks, shape N×H×W merged
+    via max).
     """
     result = results[0]
 
